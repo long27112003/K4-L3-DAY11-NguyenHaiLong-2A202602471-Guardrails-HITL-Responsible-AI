@@ -81,3 +81,16 @@ def test_output_callback_redacts_across_parts_and_accepts_empty():
         assert clean.content.parts[0].text == 'Rate: 4.25%'
         assert (plugin.total_count, plugin.redacted_count) == (3, 1)
     asyncio.run(run())
+
+@pytest.mark.parametrize('text', [
+    'An API key authenticates your application.',
+    'Keep your password private and rotate your API key.',
+    'The key to savings is a consistent deposit schedule.',
+])
+def test_output_allows_keyword_mentions(text):
+    assert content_filter(text) == {'safe': True, 'issues': [], 'redacted': text}
+
+
+def test_redaction_preserves_label_and_remaining_answer():
+    result = content_filter('Your password=admin123; your savings rate is 4.25%.')
+    assert result['redacted'] == 'Your password=[REDACTED]; your savings rate is 4.25%.'

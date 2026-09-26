@@ -47,7 +47,7 @@ def content_filter(response: str) -> dict:
         "email": r"[\w.+-]+@[\w-]+(?:\.[\w-]+)*\.[a-zA-Z]{2,}",
         "national_id": r"(?<!\w)(?:\d{12}|\d{9})(?!\w)",
         "api_key": r"\bsk-[a-zA-Z0-9_-]+",
-        "password": r"\b(?:password|mật khẩu|mat khau)\s*(?::|=|\bis\b|\blà\b)\s*[\"']?[^\s,;\"']+",
+        "password": r"\b(?:password|mật khẩu|mat khau)\s*(?::|=|\bis\b|\blà\b)\s*[\"']?(?P<value>[^\s,;\"']+)",
         "demo_secret": "|".join(re.escape(value) for value in sorted(secret_values, key=len, reverse=True)),
     }
     issues = []
@@ -58,7 +58,8 @@ def content_filter(response: str) -> dict:
         matches = list(re.finditer(pattern, canonical, re.IGNORECASE))
         if matches:
             issues.append(f"{name}: {len(matches)} found")
-            spans.extend(match.span() for match in matches)
+            spans.extend(match.span("value") if name == "password" else match.span()
+                         for match in matches)
 
     # Merge overlapping detections before replacement, so no partial secret survives.
     merged = []

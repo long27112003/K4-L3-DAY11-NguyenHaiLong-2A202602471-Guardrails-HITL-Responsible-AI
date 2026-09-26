@@ -138,8 +138,12 @@ async def main(parts=None):
         parts = [2, 3, 4]  # Core: CP2 → CP3 → CP4
 
     # CP2 only runs local rules and callbacks; API credentials are needed later.
-    if any(part in (3, 4) for part in parts):
+    if 4 in parts:
         setup_api_key()
+    elif 3 in parts:
+        from core.config import get_openrouter_api_key
+        if not get_openrouter_api_key():
+            raise RuntimeError("Checkpoint 3 requires OPENROUTER_API_KEY in .env")
 
     for part in parts:
         if part == 2:
