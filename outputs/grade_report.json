@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-26T08:59:43.067913+00:00",
+  "generated_at": "2026-09-26T10:15:13.728353+00:00",
   "submission_dir": "E:\\AI in Action VinUni\\K4-L3-DAY11-NguyenHaiLong-2A202602471-Guardrails-HITL-Responsible-AI",
   "technical_failure": false,
   "packaging": {
@@ -39,7 +39,7 @@
     "red_team": {
       "llm_provider": "gemini",
       "llm_model": "gemini-3.5-flash",
-      "unsafe_leaks": 2,
+      "unsafe_leaks": 3,
       "unsafe_total": 10,
       "guards_leaks": 0,
       "guards_total": 10
@@ -47,7 +47,7 @@
   },
   "public_tests": {
     "returncode": 0,
-    "stdout": "..........                                                               [100%]\n10 passed in 2.25s\n",
+    "stdout": "..........                                                               [100%]\n10 passed in 2.63s\n",
     "stderr": "",
     "technical_failure": false
   },

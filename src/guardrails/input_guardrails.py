@@ -88,7 +88,7 @@ def detect_injection(user_input: str) -> InputStatus:
 # Return ``"ALLOW"`` if banking-related and OK.
 # ============================================================
 
-def topic_filter(user_input: str) -> InputStatus:
+def topic_filter(user_input: str, *, require_banking_topic: bool = True) -> InputStatus:
     """Decide whether the input is on-topic for VinBank.
 
     Args:
@@ -107,6 +107,11 @@ def topic_filter(user_input: str) -> InputStatus:
 
     if any(contains_topic(topic) for topic in BLOCKED_TOPICS):
         return "BLOCK"
+    if not normalized:
+        return "BLOCK"
+    if not require_banking_topic:
+        # Interactive chat delegates unknown topics to the banking system prompt.
+        return "ALLOW"
     return "ALLOW" if any(contains_topic(topic) for topic in ALLOWED_TOPICS) else "BLOCK"
 
 
@@ -124,8 +129,9 @@ def topic_filter(user_input: str) -> InputStatus:
 class InputGuardrailPlugin(base_plugin.BasePlugin):
     """Plugin that blocks bad input before it reaches the LLM."""
 
-    def __init__(self):
+    def __init__(self, *, require_banking_topic: bool = True):
         super().__init__(name="input_guardrail")
+        self.require_banking_topic = require_banking_topic
         self.blocked_count = 0
         self.total_count = 0
 
@@ -163,7 +169,7 @@ class InputGuardrailPlugin(base_plugin.BasePlugin):
         if detect_injection(text) == "BLOCK":
             self.blocked_count += 1
             return self._block_response("Blocked: phát hiện prompt injection trong nội dung đầu vào.")
-        if topic_filter(text) == "BLOCK":
+        if topic_filter(text, require_banking_topic=self.require_banking_topic) == "BLOCK":
             self.blocked_count += 1
             return self._block_response("Blocked: VinBank chỉ hỗ trợ câu hỏi ngân hàng hợp lệ.")
         return None
