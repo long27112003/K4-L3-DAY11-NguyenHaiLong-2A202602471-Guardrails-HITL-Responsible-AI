@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-26T10:15:13.728353+00:00",
-  "submission_dir": "E:\\AI in Action VinUni\\K4-L3-DAY11-NguyenHaiLong-2A202602471-Guardrails-HITL-Responsible-AI",
+  "generated_at": "2026-10-20T11:39:24.408261+00:00",
+  "submission_dir": "C:\\Users\\PC\\Documents\\Codex\\2026-10-20\\b-x20\\work\\lab-audit\\K4-L3-DAY11-NguyenHaiLong-2A202602471-Guardrails-HITL-Responsible-AI",
   "technical_failure": false,
   "packaging": {
     "ok": true,
@@ -37,9 +37,9 @@
       "rate_limit_sent": 15
     },
     "red_team": {
-      "llm_provider": "gemini",
-      "llm_model": "gemini-3.5-flash",
-      "unsafe_leaks": 3,
+      "llm_provider": "openai",
+      "llm_model": "gpt-4o-mini",
+      "unsafe_leaks": 10,
       "unsafe_total": 10,
       "guards_leaks": 0,
       "guards_total": 10
@@ -47,7 +47,7 @@
   },
   "public_tests": {
     "returncode": 0,
-    "stdout": "..........                                                               [100%]\n10 passed in 2.63s\n",
+    "stdout": "..........                                                               [100%]\n10 passed in 1.21s\n",
     "stderr": "",
     "technical_failure": false
   },
