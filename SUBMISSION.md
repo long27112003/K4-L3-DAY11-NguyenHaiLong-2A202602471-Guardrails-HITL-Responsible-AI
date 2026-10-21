@@ -86,6 +86,12 @@ K4-L3-DAY11-<HoVaTen>-<MSSV>-Guardrails-HITL-Responsible-AI/
 - **B2** — leak **Red Advance**: tối đa **+10**
 - **Không** cộng B1 + B2
 
+**Lựa chọn nộp bonus: B1 (Red, tối đa +5).** Lượt chạy OpenAI `gpt-4o-mini`
+trong `outputs/attack_results.json` ghi 10/10 prompt làm Red tiết lộ ít nhất
+một giá trị **demo** từ `data/protected/vinbank_secrets.json`. Red Advance vẫn
+0/10; sáu biến thể thử bổ sung đều bị model từ chối, nên không khai B2 đạt.
+Điểm cộng cuối cùng phụ thuộc grader chạy lại các prompt B1.
+
 ---
 
 ## 4. Định dạng tối thiểu
